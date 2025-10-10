@@ -5,7 +5,7 @@ from modules import (
     home,
     DiaMenorValor,
     ParticipacaoInvestidores,
-    #carteira_inteligente,
+    Tickers,
     #radar_mercado,
     #simulador_investimentos,
     #configuracoes
@@ -28,7 +28,7 @@ abas = st.sidebar.radio(
         "🏠 Home",
         "📊 Dia Menor Valor e Hitorico",
         "📈 Participação Investidores",
-        #"💼 Carteira Inteligente",
+        "🔎 Consulta de Empresas no Yahoo Finance",
         #"🌍 Radar de Mercado",
         #"🧮 Simulador de Investimentos",
         #"⚙️ Configurações"
@@ -42,8 +42,8 @@ elif abas == "📊 Dia Menor Valor e Hitorico":
     DiaMenorValor.show()
 elif abas == "📈 Participação Investidores":
     ParticipacaoInvestidores.show()
-#elif abas == "💼 Carteira Inteligente":
-#    carteira_inteligente.show()
+elif abas == "🔎 Consulta de Empresas no Yahoo Finance":
+     Tickers.show()
 #elif abas == "🌍 Radar de Mercado":
 #    radar_mercado.show()
 #elif abas == "🧮 Simulador de Investimentos":
