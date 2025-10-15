@@ -3,12 +3,36 @@ import streamlit as st
 import yfinance as yf
 import pandas as pd
 import plotly.graph_objects as go
+from pathlib import Path
 
+CSV_FILE = Path("empresas_salvas.csv")
+
+def carregar_dados():
+    if CSV_FILE.exists():
+        try:
+            return pd.read_csv(CSV_FILE)
+        except Exception:
+            return pd.DataFrame(columns=["Empresa", "Ticker", "Exchange"])
+    return pd.DataFrame(columns=["Empresa", "Ticker", "Exchange"])
 
 class Momentum:
     @staticmethod
     def show():
         st.title("📈 Comparativo de Momentum (até 10 ativos)")
+
+
+                # topo: histórico + download
+        st.subheader("📂 Histórico de Empresas Salvas")
+        st.dataframe(st.session_state.df_empresas)
+        col1, col2 = st.columns([1, 3])
+        with col1:
+            if st.button("🔄 Recarregar CSV do disco"):
+                st.session_state.df_empresas = carregar_dados()
+                st.rerun()
+        with col2:
+            if not st.session_state.df_empresas.empty:
+                csv_bytes = st.session_state.df_empresas.to_csv(index=False).encode("utf-8")
+                st.download_button("⬇️ Baixar CSV", data=csv_bytes, file_name=CSV_FILE.name, mime="text/csv")
 
         # --- Entradas do usuário ---
         st.write("Digite até 10 tickers (ex: PETR4.SA, VALE3.SA, AAPL, MSFT...)")
